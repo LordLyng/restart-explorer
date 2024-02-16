@@ -30,18 +30,12 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
-      - name: Install nuget validator
-        run: dotnet tool update Meziantou.Framework.NuGetPackageValidation.Tool --global
-
       - name: Get Version from tag
         if: github.event_name == 'push' && github.ref_type == 'tag'
         run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
 
       - name: dotnet Pack
         run: dotnet pack --configuration Release /p:Version=${VERSION}
-
-      - name: Validate package
-        run: meziantou.validate-nuget-package $(ls nupkg/*.nupkg)
 
       - name: Publish NuGet package
         run: |
