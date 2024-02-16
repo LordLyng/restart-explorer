@@ -17,7 +17,7 @@ env:
 jobs:
   create_nuget:
     env:
-        VERSION: ${{ inputs.version }}
+      VERSION: ${{ inputs.version }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -64,7 +64,7 @@ jobs:
         run: dotnet tool update Meziantou.Framework.NuGetPackageValidation.Tool --global
 
       - name: Validate package
-        run: meziantou.validate-nuget-package (Get-ChildItem "nupkg/*.nupkg")
+        run: meziantou.validate-nuget-package (ls nupkg/*.nupkg)
 
   deploy:
     runs-on: ubuntu-latest
@@ -83,8 +83,8 @@ jobs:
 
       - name: Publish NuGet package
         run: |
-          foreach($file in (Get-ChildItem "nupkg" -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --source https://nuget.pkg.github.com/LordLyng/index.json --api-key ${GITHUB_TOKEN} --skip-duplicate
-          }
+          for file in $(find nupkg -type f -name "*.nupkg"); do
+            dotnet nuget push "$file" --source https://nuget.pkg.github.com/LordLyng/index.json --api-key "$GITHUB_TOKEN" --skip-duplicate
+          done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
