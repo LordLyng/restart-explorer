@@ -45,6 +45,7 @@ jobs:
             artifacts: nupkg/*.nupkg
             tag: ${{ format('v{0}', env.VERSION) }}
             omitBody: true
+            token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish NuGet package
         run: |
