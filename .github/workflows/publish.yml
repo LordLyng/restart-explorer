@@ -39,6 +39,15 @@ jobs:
       - name: dotnet Pack
         run: dotnet pack --configuration Release /p:Version=${VERSION}
 
+      - name: Create Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: ${{ env.VERSION }}
+          files: |
+            nupkg/*.nupkg
+
       - name: Publish NuGet package
         run: |
           for file in $(find nupkg -type f -name "*.nupkg"); do
