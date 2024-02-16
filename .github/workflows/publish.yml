@@ -41,7 +41,7 @@ jobs:
         run: dotnet pack --configuration Release /p:Version=${VERSION}
 
       - name: Validate package
-        run: meziantou.validate-nuget-package (ls nupkg/*.nupkg)
+        run: meziantou.validate-nuget-package $(ls nupkg/*.nupkg)
 
       - name: Publish NuGet package
         run: |
