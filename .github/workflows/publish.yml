@@ -18,6 +18,8 @@ jobs:
   pack-and-deploy:
     env:
       VERSION: ${{ inputs.version }}
+    permissions:
+      packages: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
