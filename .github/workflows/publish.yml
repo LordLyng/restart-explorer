@@ -40,7 +40,7 @@ jobs:
       - name: Publish NuGet package
         run: |
           for file in $(find nupkg -type f -name "*.nupkg"); do
-            dotnet nuget push "$file" --source https://nuget.pkg.github.com/LordLyng/index.json --api-key "$GITHUB_TOKEN" --skip-duplicate
+            dotnet nuget push "$file" --source https://nuget.pkg.github.com/LordLyng/index.json --api-key ${GITHUB_TOKEN} --skip-duplicate
           done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
